@@ -1,0 +1,14 @@
+C:\デスクトップ\01_ツール\04_本管理システム_.NET\Source\Book\Book\obj\Debug\Book.FrmManu.resources
+C:\デスクトップ\01_ツール\04_本管理システム_.NET\Source\Book\Book\obj\Debug\Book.Resources.resources
+C:\デスクトップ\01_ツール\04_本管理システム_.NET\Source\Book\Book\obj\Debug\Book.vbproj.GenerateResource.cache
+C:\デスクトップ\01_ツール\04_本管理システム_.NET\Source\Book\Book\obj\Debug\Book.vbproj.CoreCompileInputs.cache
+C:\デスクトップ\01_ツール\04_本管理システム_.NET\Source\Book\Book\bin\Debug\Book.exe.config
+C:\デスクトップ\01_ツール\04_本管理システム_.NET\Source\Book\Book\bin\Debug\Book.exe
+C:\デスクトップ\01_ツール\04_本管理システム_.NET\Source\Book\Book\bin\Debug\Book.pdb
+C:\デスクトップ\01_ツール\04_本管理システム_.NET\Source\Book\Book\bin\Debug\Book.xml
+C:\デスクトップ\01_ツール\04_本管理システム_.NET\Source\Book\Book\obj\Debug\Book.exe
+C:\デスクトップ\01_ツール\04_本管理システム_.NET\Source\Book\Book\obj\Debug\Book.xml
+C:\デスクトップ\01_ツール\04_本管理システム_.NET\Source\Book\Book\obj\Debug\Book.pdb
+C:\デスクトップ\01_ツール\04_本管理システム_.NET\Source\Book\Book\obj\Debug\Book.FrmBookDate.resources
+C:\デスクトップ\01_ツール\04_本管理システム_.NET\Source\Book\Book\bin\Debug\本在庫.accdb
+C:\デスクトップ\01_ツール\04_本管理システム_.NET\Source\Book\Book\obj\Debug\Book.Form1.resources
