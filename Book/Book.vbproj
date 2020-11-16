@@ -75,19 +75,10 @@
   <ItemGroup>
     <Compile Include="clsMain.vb" />
     <Compile Include="DataAccess.vb" />
-    <Compile Include="Form.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Form1.Designer.vb">
       <DependentUpon>Form1.vb</DependentUpon>
     </Compile>
     <Compile Include="Form1.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form2.Designer.vb">
-      <DependentUpon>Form2.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form2.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmManu.vb">

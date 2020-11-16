@@ -25,11 +25,12 @@ Partial Class FrmRegistration
         Me.TxtBookName = New System.Windows.Forms.TextBox()
         Me.LblBookName = New System.Windows.Forms.Label()
         Me.LblAuther = New System.Windows.Forms.Label()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.TxtAuther = New System.Windows.Forms.TextBox()
         Me.LblGenru = New System.Windows.Forms.Label()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
-        Me.ComboBox2 = New System.Windows.Forms.ComboBox()
+        Me.CmbGenru = New System.Windows.Forms.ComboBox()
+        Me.CmbProperty = New System.Windows.Forms.ComboBox()
         Me.LblProperty = New System.Windows.Forms.Label()
+        Me.BtnAct = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'TxtBookName
@@ -59,12 +60,12 @@ Partial Class FrmRegistration
         Me.LblAuther.TabIndex = 3
         Me.LblAuther.Text = "著者"
         '
-        'TextBox1
+        'TxtAuther
         '
-        Me.TextBox1.Location = New System.Drawing.Point(42, 121)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(113, 19)
-        Me.TextBox1.TabIndex = 2
+        Me.TxtAuther.Location = New System.Drawing.Point(42, 121)
+        Me.TxtAuther.Name = "TxtAuther"
+        Me.TxtAuther.Size = New System.Drawing.Size(113, 19)
+        Me.TxtAuther.TabIndex = 2
         '
         'LblGenru
         '
@@ -76,21 +77,21 @@ Partial Class FrmRegistration
         Me.LblGenru.TabIndex = 5
         Me.LblGenru.Text = "ジャンル"
         '
-        'ComboBox1
+        'CmbGenru
         '
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(45, 200)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(121, 20)
-        Me.ComboBox1.TabIndex = 6
+        Me.CmbGenru.FormattingEnabled = True
+        Me.CmbGenru.Location = New System.Drawing.Point(45, 200)
+        Me.CmbGenru.Name = "CmbGenru"
+        Me.CmbGenru.Size = New System.Drawing.Size(121, 20)
+        Me.CmbGenru.TabIndex = 6
         '
-        'ComboBox2
+        'CmbProperty
         '
-        Me.ComboBox2.FormattingEnabled = True
-        Me.ComboBox2.Location = New System.Drawing.Point(48, 282)
-        Me.ComboBox2.Name = "ComboBox2"
-        Me.ComboBox2.Size = New System.Drawing.Size(121, 20)
-        Me.ComboBox2.TabIndex = 8
+        Me.CmbProperty.FormattingEnabled = True
+        Me.CmbProperty.Location = New System.Drawing.Point(48, 282)
+        Me.CmbProperty.Name = "CmbProperty"
+        Me.CmbProperty.Size = New System.Drawing.Size(121, 20)
+        Me.CmbProperty.TabIndex = 8
         '
         'LblProperty
         '
@@ -102,17 +103,27 @@ Partial Class FrmRegistration
         Me.LblProperty.TabIndex = 7
         Me.LblProperty.Text = "プロパティ"
         '
+        'BtnAct
+        '
+        Me.BtnAct.Location = New System.Drawing.Point(214, 310)
+        Me.BtnAct.Name = "BtnAct"
+        Me.BtnAct.Size = New System.Drawing.Size(115, 41)
+        Me.BtnAct.TabIndex = 9
+        Me.BtnAct.Text = "登録"
+        Me.BtnAct.UseVisualStyleBackColor = True
+        '
         'FrmRegistration
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(381, 396)
-        Me.Controls.Add(Me.ComboBox2)
+        Me.Controls.Add(Me.BtnAct)
+        Me.Controls.Add(Me.CmbProperty)
         Me.Controls.Add(Me.LblProperty)
-        Me.Controls.Add(Me.ComboBox1)
+        Me.Controls.Add(Me.CmbGenru)
         Me.Controls.Add(Me.LblGenru)
         Me.Controls.Add(Me.LblAuther)
-        Me.Controls.Add(Me.TextBox1)
+        Me.Controls.Add(Me.TxtAuther)
         Me.Controls.Add(Me.LblBookName)
         Me.Controls.Add(Me.TxtBookName)
         Me.Name = "FrmRegistration"
@@ -125,9 +136,10 @@ Partial Class FrmRegistration
     Friend WithEvents TxtBookName As TextBox
     Friend WithEvents LblBookName As Label
     Friend WithEvents LblAuther As Label
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents TxtAuther As TextBox
     Friend WithEvents LblGenru As Label
-    Friend WithEvents ComboBox1 As ComboBox
-    Friend WithEvents ComboBox2 As ComboBox
+    Friend WithEvents CmbGenru As ComboBox
+    Friend WithEvents CmbProperty As ComboBox
     Friend WithEvents LblProperty As Label
+    Friend WithEvents BtnAct As Button
 End Class

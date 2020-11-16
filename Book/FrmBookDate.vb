@@ -14,11 +14,16 @@ Public Class FrmBookDate
 
         Call clsForm.SubOpensubForm()
 
+        Call RequeryDataGridTable()
+
     End Sub
     Private Sub FrmBookDate_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         '*************************************************************
         '*　フォームロード
         '*************************************************************
+        GetData.ProGetstrProvider = "Microsoft.ACE.OLEDB.12.0"
+        GetData.ProGetstrDataSource = "C:\デスクトップ\01_ツール\04_本管理システム_.NET\Source\Book\Book\本在庫.accdb"
+
 
         Call RequeryDataGridTable()
 
@@ -40,10 +45,24 @@ Public Class FrmBookDate
 
                 lngRowNum = .SelectedCells(0).RowIndex
 
-                If .Rows(lngRowNum).Cells(0).Value.ToString <> "" Then
+                If .Rows(lngRowNum).Cells(0).Value = Nothing Then
+                    TxtBookName.Text = ""
+                Else
                     TxtBookName.Text = .Rows(lngRowNum).Cells(0).Value.ToString
+                End If
+                If .Rows(lngRowNum).Cells(1).Value = Nothing Then
+                    TxtAuther.Text = ""
+                Else
                     TxtAuther.Text = .Rows(lngRowNum).Cells(1).Value.ToString
+                End If
+                If .Rows(lngRowNum).Cells(2).Value = Nothing Then
+                    TxtGenru.Text = ""
+                Else
                     TxtGenru.Text = .Rows(lngRowNum).Cells(2).Value.ToString
+                End If
+                If .Rows(lngRowNum).Cells(3).Value = Nothing Then
+                    TxtProperty.Text = ""
+                Else
                     TxtProperty.Text = .Rows(lngRowNum).Cells(3).Value.ToString
                 End If
             End If
@@ -89,8 +108,8 @@ Public Class FrmBookDate
         strSQL = strSQL & " AND 著者 = '" & strAutherName & "'"
 
         ' ACCESS DB レコード削除
-
-        Call GetData.SubRunsql(strSQL)
+        GetData.SetSQL = strSQL
+        Call GetData.SubRunsql()
 
         本在庫DataGridView.CurrentCell = 本在庫DataGridView.Rows(intRow).Cells(0)
 
@@ -135,7 +154,8 @@ Public Class FrmBookDate
 
         ' ACCESS DB レコード削除
 
-        Call GetData.SubRunsql(strSQL)
+        GetData.SetSQL = strSQL
+        Call GetData.SubRunsql()
 
         本在庫DataGridView.CurrentCell = 本在庫DataGridView.Rows(intRow).Cells(0)
 
@@ -153,17 +173,16 @@ Public Class FrmBookDate
         'Access2007形式のファイルなのでこれを設定します。
         builder.Provider = "Microsoft.ACE.OLEDB.12.0"
         'Accessファイルへのパスを設定します。
-        builder.DataSource = "C:\デスクトップ\01_ツール\04_本管理システム_.NET\Source\Book\Book\本在庫.accdb"
+        builder.DataSource = "C:\デスクトップ\01_ツール\04_本管理システム_.NET\git\Book\本在庫.accdb"
         '接続情報を使ってコネクションを生成します。
         Using conn As New OleDbConnection(builder.ConnectionString)
             'SQL文とコネクションを設定します。
             strSQL = ""
-            strSQL = strSQL & "SELECT * FROM 本在庫"
-            'strSQL = strSQL & "SELECT HZK.題名, HZK.著者, GMST.ジャンル名, PMST.状態名"
-            'strSQL = strSQL & " FROM (本在庫 AS HZK LEFT JOIN ジャンルマスタ AS GMST"
-            'strSQL = strSQL & " ON HZK.ジャンルコード = GMST.ジャンルコード)"
-            'strSQL = strSQL & " LEFT JOIN 状態マスタ AS PMST"
-            'strSQL = strSQL & " ON HZK.状態コード = PMST.状態コード"
+            strSQL = strSQL & "SELECT HZK.題名, HZK.著者, GMST.[ジャンル名], PMST.状態名"
+            strSQL = strSQL & " FROM (本在庫 AS HZK LEFT JOIN ジャンルマスタ AS GMST "
+            strSQL = strSQL & " ON HZK.[ジャンルコード] = GMST.[ジャンルコード])"
+            strSQL = strSQL & " LEFT JOIN 状態マスタ PMST"
+            strSQL = strSQL & " ON HZK.状態コード = PMST.状態コード"
 
             Using cmd As New OleDbCommand(strSQL, conn)
                 'Accessファイルへの橋渡しのアダプターを設定します。

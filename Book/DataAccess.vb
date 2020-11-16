@@ -7,15 +7,16 @@ Public Class frmConnectAccessDB
     '----------------------------------------------------
     '　変数
     '----------------------------------------------------
-    Private strProvider As String
+    Public strProvider As String
+    Public strDataSource As String
     Private DGView As DataGridView
     Private Adapter As OleDbDataAdapter
 
     Private strSQL As String
-    Private strDataSource As String
 
     Private dbCon As OleDb.OleDbConnection
     Private dbCmd As OleDbCommand
+
     '----------------------------------------------------
     '　関数
     '----------------------------------------------------
@@ -30,11 +31,27 @@ Public Class frmConnectAccessDB
         End Set
     End Property
     Public Property ProGetstrDataSource() As String
+        '****************************************************
+        '*　DB接続先取得
+        '****************************************************
         Get
+            Adapter = New OleDbDataAdapter(strSQL, dbCon)
             Return strDataSource
         End Get
         Set(value As String)
             strDataSource = value
+        End Set
+    End Property
+    Public Property ProOleDataAdapter() As OleDbDataAdapter
+        '****************************************************
+        '*　DB接続先取得
+        '****************************************************
+        Get
+            ProOleDataAdapter = New OleDbDataAdapter(strSQL, dbCon)
+            Return ProOleDataAdapter
+        End Get
+        Set(value As OleDbDataAdapter)
+            ProOleDataAdapter = value
         End Set
     End Property
     Public WriteOnly Property ProSetDataGridView() As DataGridView
@@ -62,62 +79,47 @@ Public Class frmConnectAccessDB
         End Set
     End Property
 
-    Public WriteOnly Property SetDataSource() As String
+    Public Sub SubConnectAccessDb()
         '****************************************************
-        '*　DB接続先取得
+        '*　DB接続
         '****************************************************
-        Set(value As String)
-            strDataSource = value
-        End Set
-    End Property
-    'Public Sub SubConnectAccessDb()
-    '    '    '****************************************************
-    '    '    '*　DB接続
-    '    '    '****************************************************
-    '    '    'Accessへの接続情報の設定をします。
-    '    '    Dim builder As OleDbConnectionStringBuilder = New OleDbConnectionStringBuilder()
-    '    '    Dim strConnection As String
+        'Accessへの接続情報の設定をします。
+        Dim builder As OleDbConnectionStringBuilder = New OleDbConnectionStringBuilder()
+        Dim strConnection As String
 
-    '    '    'Access2007形式のファイルなのでこれを設定します。
-    '    '    builder.Provider = "Microsoft.ACE.OLEDB.12.0"
-    '    '    'Accessファイルへのパスを設定します。
-    '    '    builder.DataSource = "C:\デスクトップ\01_ツール\04_本管理システム_.NET\Source\Book\Book\本在庫.accdb"
+        'Access2007形式のファイルなのでこれを設定します。
+        builder.Provider = strProvider
+        'Accessファイルへのパスを設定します。
+        builder.DataSource = strDataSource
 
-    '    '    strConnection = "Provider = Microsoft.ACE.OLEDB.12.0;" 
-    '    '    strConnection = strConnection & "DataSource = C:\デスクトップ\01_ツール\04_本管理システム_.NET\Source\Book\Book\本在庫.accdb"
+        dbCon = New OleDbConnection(builder.ConnectionString)
 
+        dbCon.Open()
+    End Sub
+    Public Sub SubDisConnectAccessDb()
+        '****************************************************
+        '*　DBクローズ
+        '***************************************************
+        ' ACCESS DB クローズ
+        dbCon.Close()
+        dbCon.Dispose()
 
-    '    '    dbCon.ConnectionString = strConnection
-    '    '    dbCon.Open()
-
-
-    'End Sub
-    'Public Sub SubDisConnectAccessDb()
-    '    '****************************************************
-    '    '*　DBクローズ
-    '    '***************************************************
-    '    ' ACCESS DB クローズ
-    '    dbCon.Close()
-    '    dbCon.Dispose()
-
-    'End Sub
-    Public Sub SubRunsql(strsql As String)
+    End Sub
+    Public Sub SubRunsql()
         '****************************************************
         '*　SQLを実行する
         '****************************************************
         Dim builder As OleDbConnectionStringBuilder = New OleDbConnectionStringBuilder()
 
         'Access2007形式のファイルなのでこれを設定します。
-        builder.Provider = "Microsoft.ACE.OLEDB.12.0"
+        builder.Provider = strProvider
         'Accessファイルへのパスを設定します。
-        builder.DataSource = "C:\デスクトップ\01_ツール\04_本管理システム_.NET\Source\Book\Book\本在庫.accdb"
-        Using conn As New OleDbConnection(builder.]
-                ConnectionString)
-
+        builder.DataSource = strDataSource
+        Using conn As New OleDbConnection(builder.ConnectionString)
             conn.Open()
             'SQL文とコネクションを設定します。
-            Using cmd As New OleDbCommand(strsql, conn)
-                cmd.CommandText = strsql
+            Using cmd As New OleDbCommand(strSQL, conn)
+                cmd.CommandText = strSQL
                 'クエリ実行
                 cmd.ExecuteNonQuery()
             End Using
@@ -129,41 +131,82 @@ Public Class frmConnectAccessDB
         '****************************************************
         '*　DataGridViewにテーブルデータを表示
         '****************************************************
-
-        '▼MDBへの接続設定
-        '接続設定は環境に応じて書き換えてください。
+        Dim builder As OleDbConnectionStringBuilder = New OleDbConnectionStringBuilder()
+        Dim dt As DataTable
 
         '接続文字列の作成
-        Dim ConnectionString As String
-        Dim CommandText As String
         Dim UserID As String = "Admin"
         Dim Password As String = ""
 
+        'Access2007形式のファイルなのでこれを設定します。
+        builder.Provider = strProvider
+        'Accessファイルへのパスを設定します。
+        builder.DataSource = strDataSource
 
-        ConnectionString = "Provider=" & "Provider=Microsoft.ACE.OLEDB.12.0;"
-        ConnectionString &= "Data Source=" & strDataSource
-        '''ConnectionString &= "User ID=" & UserID & ";"
-        ''ConnectionString &= "Jet OLEDB:Database Password=" & Password
-
-        'SQLのSELECT文を作成
-        CommandText = strSQL
-
-        '以上の設定からデータアダプターを生成
-        Dim Adapter As New System.Data.OleDb.OleDbDataAdapter
-
-        'Adapter(CommandText, ConnectionString)
-
-        '▼データの読み込み
-        Dim Table As New DataTable()
-        Adapter.Fill(Table)
-
-        '▼データソースを設定してDataGridViewにデータを表示
-        Dim BindingSource1 As New BindingSource
-
-        BindingSource1.DataSource = Table
-        DGView.DataSource = BindingSource1
+        Using conn As New OleDbConnection(builder.ConnectionString)
+            Using cmd As New OleDbCommand(builder.ConnectionString)
+                Dim odda As OleDbDataAdapter = New OleDbDataAdapter()
+                odda.SelectCommand = cmd
+                odda.Fill(dt)
+                DGView.DataSource = dt
+            End Using
+        End Using
 
     End Sub
 
+    Public Property GetCmbBox() As ComboBox
+        '****************************************************
+        '*　コンボbox取得
+        '****************************************************
+        Get
+            Return GetCmbBox
+        End Get
+        Set(value As ComboBox)
+            GetCmbBox = value
+        End Set
+    End Property
+    Public Sub ShowCmdBox(cmb As ComboBox, strData1 As String, strData2 As String)
+        '****************************************************
+        '*　コマンドboxにテーブルデータを表示
+        '****************************************************
+        Dim Adp As New OleDbDataAdapter
+
+        'データアダプターを生成
+        Adp = Me.ProOleDataAdapter
+
+        'データの読み込み
+        Dim DataTbl As New DataTable()
+        Adp.Fill(DataTbl)
+
+        cmb.DataSource = DataTbl
+
+        '表示される値
+        cmb.DisplayMember = strData1 & strData2
+
+        '実際に選択される値
+        cmb.ValueMember = strData2
+
+    End Sub
+    Public Function GetDataTable() As DataTable
+        '****************************************************
+        '*　データテーブルに結果を格納する
+        '****************************************************
+        Dim command As New OleDbCommand
+        Dim Adp As New OleDbDataAdapter
+        Dim dt As New DataTable
+
+        'データアダプターを生成
+        Adp = Me.ProOleDataAdapter
+
+        command.Connection = dbCon
+        command.CommandText = strSQL
+        Adp.SelectCommand = command
+
+        'SQL実行 結果をデータテーブルに格納
+        Adp.Fill(dt)
+
+        GetDataTable = dt
+
+    End Function
 End Class
 
